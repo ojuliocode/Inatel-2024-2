@@ -1,0 +1,29 @@
+5
+
+natercia 15.4
+
+heliodora 10.1
+
+santarita 15.2
+
+jesuania 10.3
+
+lambari 15.1
+
+7
+
+2 1 1
+
+2 0 3
+
+1 0 4
+
+0 3 1
+
+1 4 2
+
+0 4 1
+
+3 4 2
+
+2 4 13.0
