@@ -118,6 +118,45 @@ int escolhe_pedras_pd(pedra pedras[], int n, int i, int cap_peso, int cap_volume
 	return memoria[i][cap_peso][cap_volume];
 }
 
+void escolhe_pedras_pd_iterativo(pedra pedras[], int n, int cap_peso, int cap_volume) {
+    // Initialize the memoization table
+    for (int i = 0; i < n; i++) {
+        for (int peso = 0; peso <= cap_peso; peso++) {
+            for (int volume = 0; volume <= cap_volume; volume++) {
+                memoria[i][peso][volume] = -1;
+            }
+        }
+    }
+
+    // Fill the memoization table
+    for (int i = 0; i < n; i++) {
+        for (int peso = 0; peso <= cap_peso; peso++) {
+            for (int volume = 0; volume <= cap_volume; volume++) {
+                if (i == 0) {
+                    memoria[i][peso][volume] = 0;
+                } else {
+                    pedra atual = pedras[i];
+                    
+                    // Calculate solution without including the current item
+                    int solucao_sem_incluir = memoria[i - 1][peso][volume];
+                    
+                    // Calculate solution including the current item
+                    int nova_cap_peso = peso - atual.peso;
+                    int nova_cap_volume = volume - atual.volume;
+                    if (nova_cap_peso >= 0 && nova_cap_volume >= 0) {
+                        int solucao_com_incluir = memoria[i - 1][nova_cap_peso][nova_cap_volume] + atual.valor;
+                        
+                        // Choose the better solution
+                        memoria[i][peso][volume] = max(solucao_sem_incluir, solucao_com_incluir);
+                    } else {
+                        memoria[i][peso][volume] = solucao_sem_incluir;
+                    }
+                }
+            }
+        }
+    }
+    }
+
 void inicializa_memoria(){
 	for(int i=0; i<ITENS; i++){
 		for( int j=0; j < CAP_PESO; j++){
