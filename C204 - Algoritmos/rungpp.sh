@@ -12,11 +12,15 @@ filename="${filename%.*}"
 
 # Compile the C++ file
 g++ "$1" -o "$filename.exe"
-echo "aaaaaaaaaaaaaaaaaaaaaa"
+
+echo "Running your cpp file"
 # Check if the compilation was successful
 if [ $? -eq 0 ]; then
   # Run the executable
   ./"$filename.exe"
+  echo "
+Time to remove the file!"
+  rm ./"$filename.exe"
 else
   echo "Compilation failed."
 fi
