@@ -7,11 +7,11 @@ int main(){
     int * ptr;
 
     for(int i = 0; i<10; i++){
-        arr[i] = i;
+        arr[i] = i*1000;
     }
 
     ptr = arr;
 
-    cout << *ptr + 1;
+    cout << *(ptr + 2);
     return 0;
 }
