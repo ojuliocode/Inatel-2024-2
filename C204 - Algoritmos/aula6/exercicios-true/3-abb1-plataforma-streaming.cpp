@@ -2,63 +2,97 @@
 
 using namespace std;
 
-struct node {
-    node * esq;
-    node * dir;
-    int info;
+struct Filme
+{
+    string nome, genero;
+    int duracao, classificacao, ano;
 };
 
+struct node
+{
+    node *esq;
+    node *dir;
+    Filme info;
+};
 
-void inserir(node *& noAtual, int info){
-    if(noAtual == NULL){
+void inserir(node *&noAtual, Filme info)
+{
+    if (noAtual == NULL)
+    {
         noAtual = new node;
         noAtual->dir = NULL;
         noAtual->esq = NULL;
         noAtual->info = info;
-    } else {
-        if(info >= noAtual->info)
+    }
+    else
+    {
+        if (info.nome >= noAtual->info.nome)
             inserir(noAtual->dir, info);
         else
             inserir(noAtual->esq, info);
     }
 }
 
-bool procurar(node *& noAtual, int itemProcurado){
-    if(noAtual == NULL)
-        return false;
-    
-    if(noAtual->info == itemProcurado)
-        return true;
-    
-    if(itemProcurado > noAtual->info)
-        return procurar(noAtual->dir, itemProcurado);
-    
-    if(itemProcurado < noAtual->info)
-        return procurar(noAtual->esq, itemProcurado);
+Filme *procurar(node *&noAtual, string itemProcurado)
+{
+    if (noAtual == NULL)
+        return NULL;
 
+    if (noAtual->info.nome == itemProcurado)
+        return &(noAtual->info);
+
+    if (itemProcurado > noAtual->info.nome)
+        return procurar(noAtual->dir, itemProcurado);
+
+    if (itemProcurado < noAtual->info.nome)
+        return procurar(noAtual->esq, itemProcurado);
 }
 
-
-int main(){
+int main()
+{
     // No raiz
-    node * raiz = NULL;
+    node *raiz = NULL;
 
-    int qtItens;
-    cin >> qtItens;
+    int input = -1;
 
-    for(int i=0;i<qtItens;i++){
-        int item;
-        char opcao;
-
-        cin >> opcao;
-        cin >> item;
-        if(opcao == 'i')
-            inserir(raiz, item);
-        else 
-            if(procurar(raiz, item))
-                cout << "Sim" << endl;
-            else 
-                cout << "Nao" << endl;
+    while (input != 0)
+    {
+        Filme *achou = NULL;
+        string nome, genero, procurado;
+        int duracao, classificacao, ano;
+        cin >> input;
+        switch (input)
+        {
+        case 1:
+            cin.ignore();
+            getline(cin, nome);
+            getline(cin, genero);
+            
+            cin >> duracao >> classificacao >> ano;
+            inserir(raiz, {nome, genero, duracao, classificacao, ano});
+            break;
+        case 2:
+            cin.ignore();
+            getline(cin, procurado);
+            achou = procurar(raiz, procurado);
+            if (achou != NULL)
+            {
+                cout << "Nome:" << achou->nome << endl;
+                cout << "Genero:" << achou->genero << endl;
+                cout << "Duracao:" << achou->duracao << endl;
+                cout << "Classificacao:" << achou->classificacao << endl;
+                cout << "Ano:" << achou->ano << endl;
+            }
+            else
+            {
+                cout << "Filme nao encontrado" << endl;
+            }
+            break;
+        default:
+            if(input != 0)
+                cout << "Operacao invalida" << endl;
+            break;
+        }
     }
 
     return 0;
