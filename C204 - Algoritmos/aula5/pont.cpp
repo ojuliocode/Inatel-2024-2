@@ -17,5 +17,11 @@ int main() {
     cout << *ponteiro << endl;
     *ponteiro = 5;
     cout << *ponteiro << endl;
+
+    int test = 10;
+    int *pointer = &test;
+    *pointer = 12;
+
+    cout << test;
     return 0;
 }
