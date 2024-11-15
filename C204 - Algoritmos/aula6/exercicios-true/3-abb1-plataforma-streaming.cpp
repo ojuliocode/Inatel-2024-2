@@ -93,5 +93,6 @@ int main(){
         
         cin >> opcao;
     }
+    destruct(raiz);
 	return 0;
 }
