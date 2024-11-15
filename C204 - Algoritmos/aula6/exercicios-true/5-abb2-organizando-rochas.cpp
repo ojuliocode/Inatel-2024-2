@@ -127,5 +127,5 @@ int main(){
         }
         cin >> opcao;
     }
-    
+    destruct(raiz);
 }
