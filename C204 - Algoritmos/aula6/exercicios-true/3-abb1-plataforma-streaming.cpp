@@ -1,99 +1,97 @@
-#include <iostream>
-
+#include<iostream>
+#include<list>
 using namespace std;
 
-struct Filme
-{
-    string nome, genero;
+struct Filme {
+    string nome,genero;
     int duracao, classificacao, ano;
 };
 
-struct node
-{
-    node *esq;
-    node *dir;
-    Filme info;
+struct node {
+	   Filme filme;
+	   node * left, * right;	
 };
 
-void inserir(node *&noAtual, Filme info)
-{
-    if (noAtual == NULL)
-    {
-        noAtual = new node;
-        noAtual->dir = NULL;
-        noAtual->esq = NULL;
-        noAtual->info = info;
-    }
-    else
-    {
-        if (info.nome >= noAtual->info.nome)
-            inserir(noAtual->dir, info);
-        else
-            inserir(noAtual->esq, info);
-    }
+void insert(node * & curr, Filme new_filme){
+	if(curr == NULL){
+		curr = new node;
+		curr->filme = new_filme;
+		curr->left = NULL;
+		curr->right = NULL;
+	} else {
+		if(new_filme.nome < curr->filme.nome){
+			insert(curr->left, new_filme);
+		} else {
+			insert(curr->right, new_filme);
+		}
+	}
 }
 
-Filme *procurar(node *&noAtual, string itemProcurado)
-{
-    if (noAtual == NULL)
-        return NULL;
-
-    if (noAtual->info.nome == itemProcurado)
-        return &(noAtual->info);
-
-    if (itemProcurado > noAtual->info.nome)
-        return procurar(noAtual->dir, itemProcurado);
-
-    if (itemProcurado < noAtual->info.nome)
-        return procurar(noAtual->esq, itemProcurado);
+node * search(node * curr, string nomeFilme){
+	if(curr == NULL)
+		return NULL;
+	if(curr->filme.nome == nomeFilme)
+		return curr;
+	if(nomeFilme < curr->filme.nome){
+		return search(curr->left, nomeFilme);
+	} else {
+		return search(curr->right, nomeFilme);
+	}	
 }
 
-int main()
-{
-    // No raiz
-    node *raiz = NULL;
 
-    int input = -1;
+void destruct(node * &curr){
+	if(curr != NULL){
+		destruct(curr->left);
+		destruct(curr->right);
+		delete curr;
+		curr = NULL;
+	}
+}
 
-    while (input != 0)
-    {
-        Filme *achou = NULL;
-        string nome, genero, procurado;
-        int duracao, classificacao, ano;
-        cin >> input;
-        switch (input)
+int main(){
+    node * raiz = NULL;
+    int opcao;
+    string nome,genero, nomeProcurado;
+    int duracao, classificacao, ano;
+    Filme filme;
+    node * procurado;
+    cin >> opcao;
+    while(opcao != 0){
+        switch (opcao)
         {
         case 1:
             cin.ignore();
             getline(cin, nome);
             getline(cin, genero);
-            
-            cin >> duracao >> classificacao >> ano;
-            inserir(raiz, {nome, genero, duracao, classificacao, ano});
+            cin >> duracao;
+            cin >> classificacao;
+            cin >> ano;
+            filme = {nome, genero, duracao, classificacao, ano};
+            insert(raiz, filme);
             break;
         case 2:
             cin.ignore();
-            getline(cin, procurado);
-            achou = procurar(raiz, procurado);
-            if (achou != NULL)
-            {
-                cout << "Nome:" << achou->nome << endl;
-                cout << "Genero:" << achou->genero << endl;
-                cout << "Duracao:" << achou->duracao << endl;
-                cout << "Classificacao:" << achou->classificacao << endl;
-                cout << "Ano:" << achou->ano << endl;
-            }
-            else
-            {
+            getline(cin, nomeProcurado);
+            procurado = search(raiz, nomeProcurado);
+            if(procurado == NULL)
                 cout << "Filme nao encontrado" << endl;
+            else {
+                cout << "Nome: " << procurado->filme.nome << endl;
+                cout << "Genero: " << procurado->filme.genero << endl;
+                cout << "Duracao: " << procurado->filme.duracao << " mins" << endl;
+                cout << "Classificacao: " << procurado->filme.classificacao << endl;
+                cout << "Ano: " << procurado->filme.ano << endl;
             }
+            break;
+        case 0:
             break;
         default:
-            if(input != 0)
-                cout << "Operacao invalida" << endl;
+            cout << "Operacao invalida" << endl;
             break;
         }
+        
+        cin >> opcao;
     }
-
-    return 0;
+	return 0;
 }

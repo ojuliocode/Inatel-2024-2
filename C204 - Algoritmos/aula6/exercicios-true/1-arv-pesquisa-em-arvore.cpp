@@ -2,60 +2,70 @@
 
 using namespace std;
 
-struct node {
-    int info;
-    node * left;
-    node * right;
+struct no {
+    int informacao;
+    no * esq;
+    no * dir;
 };
 
-void insert(node *& curr, int new_info){
-    if(curr == NULL){
-        curr = new node;
-        curr->info = new_info;
-        curr->left = NULL;
-        curr->right = NULL;
-    } else {
-        if(new_info < curr->info){
-            insert(curr->left, new_info);
+void inserir(no * raiz, int informacao){
+        if(raiz == NULL){
+            raiz = new no;
+            raiz->dir = NULL;
+            raiz->esq = NULL;
+            raiz->informacao = informacao;
         } else {
-            insert(curr->right, new_info);
+            if(informacao < raiz->informacao)
+                inserir(raiz->esq, informacao);
+            else 
+                inserir(raiz->dir, informacao);
         }
-    }
+    
 }
 
-node * search (node * curr, int searchedTerm){
-    if(curr == NULL)
-        return NULL;
-    if(searchedTerm == curr->info)
-        return curr;
-    if(searchedTerm < curr->info)
-        return search(curr->left, searchedTerm);
-    return search(curr->right, searchedTerm);
-
+no * search(no * curr, int searched_info){
+	if(curr == NULL)
+		return NULL;
+	if(curr->informacao == searched_info)
+		return curr;
+	if(searched_info < curr->informacao){
+		return search(curr->esq, searched_info);
+	} else {
+		return search(curr->dir, searched_info);
+	}	
+}
+void destruct(no * &curr){
+	if(curr != NULL){
+		destruct(curr->esq);
+		destruct(curr->dir);
+		delete curr;
+		curr = NULL;
+	}
 }
 
 int main(){
-    // Ponteiro para o no root
-    node * root = NULL;
+    no * raiz = NULL;
 
-    // Quantidade de itens
-    int quantidadeDeItens;
+    int qt;
 
-    cin >> quantidadeDeItens;
+    cin >> qt;
 
-    for(int i = 0; i < quantidadeDeItens; i++){
-        int item;
-        cin >> item;
-        insert(root, item);
+    for(int i =0; i< qt; i++){
+        int informacao;
+        cin>>informacao;
+        inserir(raiz, informacao);
     }
 
-    int paraSerProcurado;
-    cin >> paraSerProcurado;
+    int procurado;
 
-    node * result = search(root, paraSerProcurado);
+    cin >> procurado;
+
+    no * result = search(raiz, procurado);
     if(result != NULL)
-        cout << "Econtrado" << endl;
-    else 
-        cout << "Nao encontrado" << endl;
+        cout << "Encontrado";
+    else        
+        cout << "Nao encontrado";
+
+    destruct(raiz);
     return 0;
 }
