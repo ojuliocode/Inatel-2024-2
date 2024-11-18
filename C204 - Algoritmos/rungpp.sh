@@ -1,5 +1,5 @@
 #!/bin/bash
-
+  
 # Check if a filename is provided
 if [ -z "$1" ]; then
   echo "Usage: $0 filename.cpp"
@@ -20,7 +20,7 @@ if [ $? -eq 0 ]; then
   ./"$filename.exe"
   echo "
 Time to remove the file!"
-  rm ./"$filename.exe"
+
 else
   echo "Compilation failed."
 fi
