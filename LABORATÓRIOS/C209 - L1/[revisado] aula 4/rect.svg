@@ -1,8 +1,0 @@
-<svg width="256" height="256"  xmlns="http://www.w3.org/2000/svg">
-    <rect width="256" height="256" fill="green"/>
-    
-    <circle cx="128" cy="128" r="50" fill="yellow" />
-   
-    <path d="M 0 128 q 64 -128 128 0 Z" stroke="white"/>
-    <path d="M 128 128 q 64 128 128 0 Z" stroke="white" />
-</svg>
