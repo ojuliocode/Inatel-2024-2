@@ -1,0 +1,33 @@
+Questão 1
+
+A) Falsa 
+
+O comando correto seria fs,data = wavfile.read("Roundabout.wav"),
+a função wavfile.read retorna primeiro a taxa de amostragem e depois 
+os canais de som, ou seja, as variáveis precisam estar na ordem fs - data
+
+B) Falsa
+
+Apesar do JPEG ser uma compressão com perda, a operação de mudança de espaço de cor
+não acarreta na perda de informação
+
+C) Falsa
+
+Na compressão de vídeo ainda são emitidos outros I-Frames após o primeiro
+I-Frame principalmente quando a mudança de um quadro para o outro é muito grande
+como por exemplo na troca de cenários em um filme, nesses casos não vale a pena
+emitir um P-Frame.
+
+D) Falsa
+
+Como a taxa de atualização é de 23fps, significa que a cada segundo são emitidos
+23 frames (quadros). No intervalo de 3 à 5 segundos temos 3 segundos de duração,
+multiplicando 3 segundos por 23fps temos um total de 69 quadros em que a função
+foi aplicada
+
+E) Falsa
+
+O tipo de compressão que repete o valor do pixel de menor distância em blocos quadrados é a 
+compressão diabólica, a compressão fractal baseia-se em encontrar partes semelhantes na imagem.
+
+F) Verdadeira
